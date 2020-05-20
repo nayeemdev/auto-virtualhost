@@ -25,3 +25,27 @@ do
 	echo -e $"Please give a domain name like nayeem.test or web.dev :"
 	read domain
 done
+
+### Checking up given directory, is available for this domain
+
+if [ "$rootDir" == "" ]; then
+	rootDir=${domain//./}
+fi
+
+if [[ "$rootDir" =~ ^/ ]]; then
+	dirPath=''
+fi
+
+rootDir=$dirPath$rootDir
+
+### check if domain already exists
+if [ -e $domainAvailable ]; then
+        echo -e $"Hey this domain is already exist in directory please retry eith new one."
+        exit;
+fi
+
+### checking up directory is exist if not then create one with permison
+if ! [ -d $rootDir ]; then
+        mkdir $rootDir
+        chmod 755 $rootDir
+fi
