@@ -49,3 +49,29 @@ if ! [ -d $rootDir ]; then
         mkdir $rootDir
         chmod 755 $rootDir
 fi
+
+### Creating virtual host conf file with rules
+if ! echo "
+<VirtualHost *:80>
+        ServerAdmin $email
+        ServerName $domain
+        ServerAlias $domain
+        DocumentRoot $rootDir
+        ErrorLog /var/log/apache2/$domain-error.log
+        LogLevel error
+        CustomLog /var/log/apache2/$domain-access.log combined
+        <Directory />
+                AllowOverride All
+        </Directory>
+        <Directory $rootDir>
+                Options Indexes FollowSymLinks MultiViews
+                AllowOverride all
+                Require all granted
+        </Directory>
+</VirtualHost>" > $domainAvailable
+then
+        echo -e $"Oooops!! Something wen wrong to create $domain host please retry"
+        exit;
+else
+        echo -e $"BoooooM!! Virtual Host Created Successfully.\n"
+fi
