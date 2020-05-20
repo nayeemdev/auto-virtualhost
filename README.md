@@ -55,7 +55,7 @@ For create virtual host
   <dt>Note: the default project directory is /var/www/html</dt>
 </dl>
 
-##Global Example
+## Global Example
 
 ```
 sudo virtualhost create nayeem.test /var/www/html/nayeem
