@@ -70,8 +70,24 @@ if ! echo "
         </Directory>
 </VirtualHost>" > $domainAvailable
 then
-        echo -e $"Oooops!! Something wen wrong to create $domain host please retry"
+        echo -e $"Oooops!! Something went wrong to create $domain host please retry"
         exit;
 else
         echo -e $"BoooooM!! Virtual Host Created Successfully.\n"
 fi
+
+### Final touch: add in /etc/hosts site enable and apache restart
+if ! echo "127.0.0.1	$domain" >> /etc/hosts
+then
+        echo $"ERROR: Not able to write in /etc/hosts"
+        exit;
+else
+        echo -e $"Host added to /etc/hosts file \n"
+fi
+
+a2ensite $domain
+
+/etc/init.d/apache2 reload
+
+echo -e $"**************** Host created successfully visit your domain: http://$domain now **************************"
+exit;
