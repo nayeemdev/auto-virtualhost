@@ -33,6 +33,10 @@ sudo sh virtualhost.sh create [domain_name] [project_directory(optional)]
 sudo sh virtualhost.sh create nayeem.test /var/www/html/nayeem
 ```
 
+## Run Host
+###### GoTo Your Browser and run http://your_domain
+
+
 
 # <p align="center">*****Extra Tips*****</p>
 <p align="center">Hey here is a tips for you.</p>
