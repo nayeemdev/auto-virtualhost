@@ -21,16 +21,13 @@ chmod +x virtualhost.sh
 ## How To Use
 
 ```
-sudo sh virtualhost.sh create [domain_name] [your_project_full_directory_path(optional)]
+sudo ./virtualhost.sh [create/delete] [domain_name] [your_project_full_directory_path]
 ```
-<dl>
-  <dt>Note: the default project directory is /var/www/html</dt>
-</dl>
 
 ## Using Examples
 
 ```
-sudo sh virtualhost.sh create nayeem.test /var/www/html/nayeem
+sudo ./virtualhost.sh create nayeem.test /var/www/html/nayeem
 ```
 
 ## Run Host
@@ -49,11 +46,9 @@ sudo cp virtualhost.sh /usr/local/bin/virtualhost
 ```
 For create virtual host
 ```
- sudo virtualhost create [domain_name] [your_project_full_directory_path(optional)]
+ sudo virtualhost [create/delete] [domain_name] [your_project_full_directory_path]
 ```
-<dl>
-  <dt>Note: the default project directory is /var/www/html</dt>
-</dl>
+
 
 ## Global Example
 

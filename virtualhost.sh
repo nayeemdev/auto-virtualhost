@@ -20,74 +20,92 @@ if [ "$(whoami)" != 'root' ]; then
 		exit 1;
 fi
 
-while [ "$domain" == "" ]
-do
+if [ "$action" != 'create' ] && [ "$action" != 'delete' ]
+	then
+		echo $"Please Use create or delete as action."
+		exit 1;
+fi
+
+while [ "$domain" == '' ]; do
 	echo -e $"Please give a domain name like nayeem.test or web.dev :"
 	read domain
 done
 
-### Checking up given directory, is available for this domain
+if [ "$action" == 'create' ]; then
+                ### check if domain already exists
+                if [ -e $domainAvailable ]; then
+                        echo -e $"Hey this domain is already exist in directory please retry eith new one."
+                        exit;
+                fi
 
-if [ "$rootDir" == "" ]; then
-	rootDir=${domain//./}
+                ### checking up directory is exist if not then create one with permison
+                if ! [ -d $rootDir ]; then
+                        mkdir $rootDir
+                        chmod 755 $rootDir
+                fi
+
+                ### Creating virtual host conf file with rules
+                if ! echo "
+                <VirtualHost *:80>
+                        ServerAdmin $email
+                        ServerName $domain
+                        ServerAlias $domain
+                        DocumentRoot $rootDir
+                        ErrorLog /var/log/apache2/$domain-error.log
+                        LogLevel error
+                        CustomLog /var/log/apache2/$domain-access.log combined
+                        <Directory />
+                                AllowOverride All
+                        </Directory>
+                        <Directory $rootDir>
+                                Options Indexes FollowSymLinks MultiViews
+                                AllowOverride all
+                                Require all granted
+                        </Directory>
+                </VirtualHost>" > $domainAvailable
+                then
+                        echo -e $"Oooops!! Something went wrong to create $domain host please retry"
+                        exit;
+                else
+                        echo -e $"BoooooM!! Virtual Host Created Successfully.\n"
+                fi
+
+                ### Final touch: add in /etc/hosts site enable and apache restart
+                if ! echo "127.0.0.1	$domain" >> /etc/hosts
+                then
+                        echo $"ERROR: Not able to write in /etc/hosts"
+                        exit;
+                else
+                        echo -e $"Host added to /etc/hosts file \n"
+                fi
+
+                a2ensite $domain
+
+                /etc/init.d/apache2 reload
+
+                echo -e $"**************** Host created successfully visit your domain: http://$domain now **************************"
+                exit;
+        else
+                ### check whether domain already exists
+		if ! [ -e $domainAvailable ]; then
+			echo -e $"This domain does not exist.\nPlease check the domain name"
+			exit;
+		else
+			### Delete domain in /etc/hosts
+			newhost=${domain//./\\.}
+
+			sed -i "/$newhost/d" /etc/hosts
+
+			### disable website
+			a2dissite $domain
+
+			### restart Apache
+			/etc/init.d/apache2 reload
+
+			### Delete virtual host rules files
+			rm $domainAvailable
+		fi
+		### show the finished message
+		echo -e $"Complete!\nYou just removed Virtual Host $domain"
+		exit 0;
 fi
-
-if [[ "$rootDir" =~ ^/ ]]; then
-	dirPath=''
-fi
-
-rootDir=$dirPath$rootDir
-
-### check if domain already exists
-if [ -e $domainAvailable ]; then
-        echo -e $"Hey this domain is already exist in directory please retry eith new one."
-        exit;
-fi
-
-### checking up directory is exist if not then create one with permison
-if ! [ -d $rootDir ]; then
-        mkdir $rootDir
-        chmod 755 $rootDir
-fi
-
-### Creating virtual host conf file with rules
-if ! echo "
-<VirtualHost *:80>
-        ServerAdmin $email
-        ServerName $domain
-        ServerAlias $domain
-        DocumentRoot $rootDir
-        ErrorLog /var/log/apache2/$domain-error.log
-        LogLevel error
-        CustomLog /var/log/apache2/$domain-access.log combined
-        <Directory />
-                AllowOverride All
-        </Directory>
-        <Directory $rootDir>
-                Options Indexes FollowSymLinks MultiViews
-                AllowOverride all
-                Require all granted
-        </Directory>
-</VirtualHost>" > $domainAvailable
-then
-        echo -e $"Oooops!! Something went wrong to create $domain host please retry"
-        exit;
-else
-        echo -e $"BoooooM!! Virtual Host Created Successfully.\n"
-fi
-
-### Final touch: add in /etc/hosts site enable and apache restart
-if ! echo "127.0.0.1	$domain" >> /etc/hosts
-then
-        echo $"ERROR: Not able to write in /etc/hosts"
-        exit;
-else
-        echo -e $"Host added to /etc/hosts file \n"
-fi
-
-a2ensite $domain
-
-/etc/init.d/apache2 reload
-
-echo -e $"**************** Host created successfully visit your domain: http://$domain now **************************"
-exit;
