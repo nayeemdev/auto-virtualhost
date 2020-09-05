@@ -34,7 +34,6 @@ sudo ./virtualhost.sh create nayeem.test /var/www/html/nayeem
 ###### GoTo Your Browser and run http://your_domain
 
 
-
 # <p align="center">*****Extra Tips*****</p>
 <p align="center">Hey here is a tips for you.</p>
 <p align="center">You can run this script globally if you want just follow up these steps</p>

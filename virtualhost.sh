@@ -83,7 +83,7 @@ if [ "$action" == 'create' ]; then
 
                 /etc/init.d/apache2 reload
 
-                echo -e $"**************** Host created successfully visit your domain: http://$domain now **************************"
+                echo -e $"*************** Host created successfully visit your domain: http://$domain now **************************"
                 exit;
         else
                 ### check whether domain already exists
