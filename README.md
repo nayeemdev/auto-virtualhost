@@ -41,7 +41,8 @@ sudo ./virtualhost.sh create nayeem.test /var/www/html/nayeem
 ## Globally Use
 Run this Command for copy sh file to local bin directory
 ```
-sudo cp virtualhost.sh /usr/local/bin/virtualhost
+sudo cp virtualhost.sh /usr/bin/virtualhost
+sudo cp virtualhost.sh /usr/local/bin
 ```
 For create virtual host
 ```
