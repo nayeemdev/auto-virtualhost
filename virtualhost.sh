@@ -20,12 +20,19 @@ if [ "$(whoami)" != 'root' ]; then
 		exit 1;
 fi
 
-if [ "$action" != 'create' ] && [ "$action" != 'delete' ]
+if [ "$action" != 'create' ] && [ "$action" != 'delete' ] && [ "$action" != 'list' ]
 	then
-		echo $"Please Use create or delete as action."
+		echo $"Please Use create or delete or list as action."
 		exit 1;
 fi
-
+if [ "$action" == 'list' ]
+	then
+		echo -e $"\n********************\n"
+		### command for list
+		a2query -s
+		echo -e $"\n********************\n"
+		exit;
+fi
 while [ "$domain" == '' ]; do
 	echo -e $"Please give a domain name like nayeem.test or web.dev :"
 	read domain
