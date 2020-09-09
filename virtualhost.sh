@@ -16,13 +16,13 @@ domainAvailable=$availableSites$domain.conf
 ### Checking Up isRoot user and not given domain name
 
 if [ "$(whoami)" != 'root' ]; then
-	echo $"You dont have permission to run this script please login as root with sudo -s or use sudo"
+	echo -e $"\nYou dont have permission to run this script please login as root with sudo -s or use sudo.\n"
 		exit 1;
 fi
 
 if [ "$action" != 'create' ] && [ "$action" != 'delete' ] && [ "$action" != 'list' ]
 	then
-		echo $"Please Use create or delete or list as action."
+		echo -e $"\nPlease Use create or delete or list as action.\n"
 		exit 1;
 fi
 if [ "$action" == 'list' ]
@@ -41,7 +41,7 @@ done
 if [ "$action" == 'create' ]; then
                 ### check if domain already exists
                 if [ -e $domainAvailable ]; then
-                        echo -e $"Hey this domain is already exist in directory please retry eith new one."
+                        echo -e $"\nHey, this domain is already exist in host please retry with new one.\n"
                         exit;
                 fi
 
@@ -71,16 +71,16 @@ if [ "$action" == 'create' ]; then
                         </Directory>
                 </VirtualHost>" > $domainAvailable
                 then
-                        echo -e $"Oooops!! Something went wrong to create $domain host please retry"
+                        echo -e $"\nOooops!! Something went wrong to create $domain host please retry.\n"
                         exit;
                 else
-                        echo -e $"BoooooM!! Virtual Host Created Successfully.\n"
+                        echo -e $"\nBoooooM!! Your Virtual Host Created Successfully.\n"
                 fi
 
                 ### Final touch: add in /etc/hosts site enable and apache restart
                 if ! echo "127.0.0.1	$domain" >> /etc/hosts
                 then
-                        echo $"ERROR: Not able to write in /etc/hosts"
+                        echo $"ERROR: Not able to write in /etc/hosts\n"
                         exit;
                 else
                         echo -e $"Host added to /etc/hosts file \n"
@@ -90,12 +90,12 @@ if [ "$action" == 'create' ]; then
 
                 /etc/init.d/apache2 reload
 
-                echo -e $"*************** Host created successfully visit your domain: http://$domain now **************************"
+                echo -e $"\n*************** Host created successfully visit your domain: http://$domain now **************************\n"
                 exit;
         else
                 ### check whether domain already exists
 		if ! [ -e $domainAvailable ]; then
-			echo -e $"This domain does not exist.\nPlease check the domain name"
+			echo -e $"\nThe domain name you provide is not exist in host please use an existing domain.\n"
 			exit;
 		else
 			### Delete domain in /etc/hosts
@@ -113,6 +113,6 @@ if [ "$action" == 'create' ]; then
 			rm $domainAvailable
 		fi
 		### show the finished message
-		echo -e $"Complete!\nYou just removed Virtual Host $domain"
+		echo -e $"\n*************** Your Domain deleted with host and disabled site. ***************\n"
 		exit 0;
 fi
