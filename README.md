@@ -1,17 +1,8 @@
 # <p align="center">Auto Virtual Host Apache</p>
 Hey when we are work in new project then its annoying to create new virtual hosts checking all those boring things if not work then fixing bug on hosts file etc.... So There is a script to create your virtual host automatically. Just run script and BooooooooooooM! Host created within a second.
-```
-Create Screenshot
-```
-![screenshot_nym_2020-09-09_2](https://user-images.githubusercontent.com/40033062/92630467-bbcc7400-f2f1-11ea-9361-8be867e4e299.png)
-```
-Delete Screenshot
-```
-![screenshot_nym_2020-09-09_3](https://user-images.githubusercontent.com/40033062/92630420-a8b9a400-f2f1-11ea-9c57-e49685c09c99.png)
-```
-List Screenshot
-```
-![screenshot_nym_2020-09-10](https://user-images.githubusercontent.com/40033062/92641126-1967bd00-f300-11ea-8290-ef702355e42b.png)
+
+![apache-virtualhost](https://user-images.githubusercontent.com/40033062/92646491-589a0c00-f308-11ea-90e5-102e617e3bb7.gif)
+
 
 ## Features
 * Create New Virtualhost
