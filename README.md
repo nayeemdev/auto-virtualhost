@@ -47,6 +47,11 @@ sudo ./virtualhost.sh create nayeem.test /var/www/html/nayeem
 <p align="center">You can run this script globally if you want just follow up these steps</p>
 
 ## Globally Use
+Give permission for executing:
+```
+chmod +x virtualhost.sh
+```
+
 Run this Command for copy sh file to local bin directory
 ```
 sudo cp virtualhost.sh /usr/bin/virtualhost
