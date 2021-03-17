@@ -15,7 +15,7 @@ Hey when we are work in new project then its annoying to create new virtual host
 1. Clone or download this repo
 
 ```
-git clone https://github.com/nayeemdev/auto-virtualhost-apache
+git clone https://github.com/nayeemdev/auto-virtualhost
 ```
 ```
 cd auto-virtualhost-apache
