@@ -1,37 +1,74 @@
-## Welcome to GitHub Pages
+# <p align="center">Auto Virtual Host Apache</p>
+Hey when we are work in new project then its annoying to create new virtual hosts checking all those boring things if not work then fixing bug on hosts file etc.... So There is a script to create your virtual host automatically. Just run script and BooooooooooooM! Host created within a second.
 
-You can use the [editor on GitHub](https://github.com/nayeemdev/auto-virtualhost/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+![apache-virtualhost](https://user-images.githubusercontent.com/40033062/92646491-589a0c00-f308-11ea-90e5-102e617e3bb7.gif)
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
-### Markdown
+## Features
+* Create New Virtualhost
+* Delete an Existing Host
+* View all List of Existing Host
+* Compatible with nginx and apache <b>[Upcoming...]</b>
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+## Process of Installation
 
-```markdown
-Syntax highlighted code block
+1. Clone or download this repo
 
-# Header 1
-## Header 2
-### Header 3
+```
+git clone https://github.com/nayeemdev/auto-virtualhost
+```
+```
+cd auto-virtualhost-apache
+```
+2. Give permission for executing:
 
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+```
+chmod +x virtualhost.sh
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+## How To Use
 
-### Jekyll Themes
+```
+sudo ./virtualhost.sh [create/delete] [domain_name] [your_project_full_directory_path]
+```
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/nayeemdev/auto-virtualhost/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+## Using Examples
 
-### Support or Contact
+```
+sudo ./virtualhost.sh create nayeem.test /var/www/html/nayeem
+```
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+## Run Host
+###### GoTo Your Browser and run http://your_domain
+
+
+# <p align="center">*****Extra Tips*****</p>
+<p align="center">Hey here is a tips for you.</p>
+<p align="center">You can run this script globally if you want just follow up these steps</p>
+
+## Globally Use
+Give permission for executing:
+```
+chmod +x virtualhost.sh
+```
+
+Run this Command for copy sh file to local bin directory
+```
+sudo cp virtualhost.sh /usr/bin/virtualhost
+sudo cp virtualhost.sh /usr/local/bin
+```
+For create virtual host
+```
+ sudo virtualhost [create/delete] [domain_name] [your_project_full_directory_path]
+```
+
+
+## Global Example
+
+```
+sudo virtualhost create nayeem.test /var/www/html/nayeem
+```
+
+
+## Want to contribute?
+<p>Clone this repo add/change what you want and send a pull request. ##Happy Coding##</p>
