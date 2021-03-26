@@ -23,3 +23,12 @@ if [ "$action" != 'create' ] && [ "$action" != 'delete' ] && [ "$action" != 'lis
 		echo -e $"\nPlease Use create or delete or list as action.\n"
 		exit 1;
 fi
+
+if [ "$action" == 'list' ]
+	then
+		echo -e $"\n********************\n"
+		### command for list
+		grep server_name /etc/nginx/sites-enabled/* -RiI
+		echo -e $"\n********************\n"
+		exit;
+fi
