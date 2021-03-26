@@ -32,3 +32,8 @@ if [ "$action" == 'list' ]
 		echo -e $"\n********************\n"
 		exit;
 fi
+
+while [ "$domain" == '' ]; do
+	echo -e $"Please give a domain name like nayeem.test or web.dev :"
+	read domain
+done
