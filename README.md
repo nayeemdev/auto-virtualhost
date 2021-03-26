@@ -96,4 +96,4 @@ sudo nginx-virtualhost create nayeem.test /var/www/html/nayeem
 
 
 ## Want to contribute?
-<p>Clone this repo add/change what you want and send a pull request. ##Happy Coding##</p>
+<p>Fork this repo add/change what you want and send a pull request. ##Happy Coding##</p>
