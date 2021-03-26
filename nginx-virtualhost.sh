@@ -10,3 +10,10 @@ enabledSites='/etc/nginx/sites-enabled/'
 availableSites='/etc/nginx/sites-available/'
 dirPath='/var/www/html'
 domainAvailable=$availableSites$domain.conf
+
+### Checking Up isRoot user and not given domain name
+
+if [ "$(whoami)" != 'root' ]; then
+	echo -e $"\nYou dont have permission to run this script please login as root with sudo -s or use sudo.\n"
+		exit 1;
+fi
