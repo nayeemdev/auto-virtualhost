@@ -43,10 +43,10 @@ sudo ./nginx-virtualhost.sh [create/delete/list] [domain_name] [your_project_ful
 
 ```
 ### For Apache
-sudo ./virtualhost.sh create nayeem.test /var/www/html/nayeem
+sudo ./apache-virtualhost.sh create nayeem.test /var/www/html/nayeem
 
 ### For nginx
-sudo ./virtualhost.sh create nayeem.test /var/www/html/nayeem
+sudo ./nginx-virtualhost.sh create nayeem.test /var/www/html/nayeem
 ```
 
 ## Run Host
