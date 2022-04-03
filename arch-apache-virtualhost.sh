@@ -8,9 +8,9 @@ rootDir=$3
 owner=$(who am i | awk '{print $1}')
 apacheUser=$(ps -ef | egrep '(httpd|apache2|apache)' | grep -v root | head -n1 | awk '{print $1}')
 email='webmaster@localhost'
-enabledSites='/etc/apache2/sites-enabled/'
-availableSites='/etc/apache2/sites-available/'
-dirPath='/var/www/html'
+enabledSites='/etc/httpd/conf/extra/sites-enabled/'
+availableSites='/etc/httpd/conf/extra/sites-available/'
+dirPath='/srv/http/'
 domainAvailable=$availableSites$domain.conf
 
 ### Checking Up isRoot user and not given domain name
@@ -29,7 +29,8 @@ if [ "$action" == 'list' ]
 	then
 		echo -e $"\n********************\n"
 		### command for list
-		a2query -s
+		# a2query -s
+                basename  /etc/httpd/conf/extra/sites-available/*.conf .conf
 		echo -e $"\n********************\n"
 		exit;
 fi
@@ -58,9 +59,9 @@ if [ "$action" == 'create' ]; then
                         ServerName $domain
                         ServerAlias $domain
                         DocumentRoot $rootDir
-                        ErrorLog /var/log/apache2/$domain-error.log
+                        ErrorLog /var/log/httpd/$domain-error.log
                         LogLevel error
-                        CustomLog /var/log/apache2/$domain-access.log combined
+                        CustomLog /var/log/httpd/$domain-access.log combined
                         <Directory />
                                 AllowOverride All
                         </Directory>
@@ -86,9 +87,10 @@ if [ "$action" == 'create' ]; then
                         echo -e $"Host added to /etc/hosts file \n"
                 fi
 
-                a2ensite $domain
+                # a2ensite $domain
 
-                /etc/init.d/apache2 reload
+                # /etc/init.d/apache2 reload
+                systemctl restart httpd.service
 
                 echo -e $"\n*************** Host created successfully visit your domain: http://$domain now **************************\n"
                 exit;
@@ -104,10 +106,11 @@ if [ "$action" == 'create' ]; then
 			sed -i "/$newhost/d" /etc/hosts
 
 			### disable website
-			a2dissite $domain
+			# a2dissite $domain
 
 			### restart Apache
-			/etc/init.d/apache2 reload
+			# /etc/init.d/apache2 reload
+                        systemctl restart httpd.service
 
 			### Delete virtual host rules files
 			rm $domainAvailable
@@ -116,3 +119,4 @@ if [ "$action" == 'create' ]; then
 		echo -e $"\n*************** Your Domain deleted with host and disabled site. ***************\n"
 		exit 0;
 fi
+
