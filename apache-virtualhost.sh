@@ -67,6 +67,8 @@ if [ "$action" == 'create' ]; then
 
                 ### Creating virtual host conf file with rules
                 if ! echo "
+                Listen $port
+		NameVirtualHost *:$port
                 <VirtualHost *:$port>
                         ServerAdmin $email
                         ServerName $domain
@@ -104,7 +106,7 @@ if [ "$action" == 'create' ]; then
 
                 /etc/init.d/apache2 reload
 
-                echo -e $"\n*************** Host created successfully visit your domain: http://$domain now **************************\n"
+                echo -e $"\n*************** Host created successfully visit your domain: http://$domain:$port now **************************\n"
                 exit;
         else
                 ### check whether domain already exists
