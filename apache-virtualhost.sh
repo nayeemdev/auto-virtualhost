@@ -5,6 +5,7 @@
 action=$1
 domain=$2
 rootDir=$3
+port=${4:-80}  # Default port is 80 if not specified
 owner=$(who am i | awk '{print $1}')
 apacheUser=$(ps -ef | egrep '(httpd|apache2|apache)' | grep -v root | head -n1 | awk '{print $1}')
 email='webmaster@localhost'
@@ -12,6 +13,12 @@ enabledSites='/etc/apache2/sites-enabled/'
 availableSites='/etc/apache2/sites-available/'
 dirPath='/var/www/html'
 domainAvailable=$availableSites$domain.conf
+
+### Function to check if port is already in use
+function is_port_in_use {
+    netstat -tuln | grep :$1 > /dev/null
+    return $?
+}
 
 ### Checking Up isRoot user and not given domain name
 
@@ -39,6 +46,13 @@ while [ "$domain" == '' ]; do
 done
 
 if [ "$action" == 'create' ]; then
+
+### Check if port is already in use
+    if is_port_in_use $port; then
+        echo -e $"\nError: Port $port is already in use. Please use a different port.\n"
+        exit 1
+    fi
+
                 ### check if domain already exists
                 if [ -e $domainAvailable ]; then
                         echo -e $"\nHey, this domain is already exist in host please retry with new one.\n"
@@ -53,7 +67,9 @@ if [ "$action" == 'create' ]; then
 
                 ### Creating virtual host conf file with rules
                 if ! echo "
-                <VirtualHost *:80>
+                Listen $port
+		NameVirtualHost *:$port
+                <VirtualHost *:$port>
                         ServerAdmin $email
                         ServerName $domain
                         ServerAlias $domain
@@ -90,7 +106,7 @@ if [ "$action" == 'create' ]; then
 
                 /etc/init.d/apache2 reload
 
-                echo -e $"\n*************** Host created successfully visit your domain: http://$domain now **************************\n"
+                echo -e $"\n*************** Host created successfully visit your domain: http://$domain:$port now **************************\n"
                 exit;
         else
                 ### check whether domain already exists
